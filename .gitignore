@@ -1,0 +1,20 @@
+# Ignore binary files and build artifacts
+*.o
+*.exe
+*.out
+app_main
+app_test*
+*.tmp
+
+# Ignore temporary files
+/tmp
+*.log
+
+# Ignore VSCode files
+.vscode/
+
+# Ignore Doxygen files
+Doxyfile
+
+# Ignore Doxygen HTML output folder
+html/
