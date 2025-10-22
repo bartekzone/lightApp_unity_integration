@@ -88,34 +88,34 @@ Create testing/test_gpio_unity.c with the following content:
 #include "Gpio_Cfg.h"  
 #include "ErrorHandler.h"  
 
-// Example test: check if LED can be set correctly
-void test_gpio_set_valid_led(void) {
-    bool result = gpio_set(GPIO_SIGNAL_LED);
-    TEST_ASSERT_TRUE(result);
-}
-Explanation:
-We include unity.h to use Unity macros.
-TEST_ASSERT_TRUE(expr) checks if the given expression is true.
-Each test is a void function prefixed with test_.
-Unity automatically registers and runs these functions through the test runner (step 6).
+// Example test: check if LED can be set correctly  
+void test_gpio_set_valid_led(void) {  
+    bool result = gpio_set(GPIO_SIGNAL_LED);  
+    TEST_ASSERT_TRUE(result);  
+}  
+Explanation:  
+We include unity.h to use Unity macros.  
+TEST_ASSERT_TRUE(expr) checks if the given expression is true.  
+Each test is a void function prefixed with test_.  
+Unity automatically registers and runs these functions through the test runner (step 6).  
 
 ---
 
 ## 6. Creating a Test Runner
 Add following content to test_gpio_unity.c
 
-void setUp(void) {
-    // This function runs before each test.
-    // Use it to initialize or reset variables/hardware stubs.
-}
+void setUp(void) {  
+    // This function runs before each test.  
+    // Use it to initialize or reset variables/hardware stubs.  
+}  
 
-void tearDown(void) {
-    // This function runs after each test.
-    // Use it to clean up.
-}
+void tearDown(void) {  
+    // This function runs after each test.  
+    // Use it to clean up.  
+}  
 
-int main(void) {
-    UNITY_BEGIN(); // Start Unity test session
+int main(void) {  
+    UNITY_BEGIN(); // Start Unity test session  
 
     RUN_TEST(test_gpio_set_valid_led); // Run our test function
 
@@ -124,48 +124,47 @@ int main(void) {
 
 Explanation:
 
-UNITY_BEGIN() starts the test runner.
-RUN_TEST(test_fn) calls the test and logs pass/fail.
-UNITY_END() prints a summary and returns exit code.
-setUp() / tearDown() are hooks for preparing and cleaning test state.
+UNITY_BEGIN() starts the test runner.  
+RUN_TEST(test_fn) calls the test and logs pass/fail.  
+UNITY_END() prints a summary and returns exit code.  
+setUp() / tearDown() are hooks for preparing and cleaning test state.  
 
 ---
 
 ## 7. Building and Running Tests with CMake
-Use this CMakeLists.txt at the root of your project:
-Change the project name:
-    project(MinimalUnityTests C)
-In this case main function is in test_gpio_unity.c. Update exatuable files to:
-    # Create executable "main" from source files
-        add_executable(app_test_unity
-        testing/unity/unity.c
-        testing/test_gpio_unity.c
-        BSW/GPIO/Gpio.c
-        BSW/GPIO/Gpio_Cfg.c
-        BSW/DET/ErrorHandler.c
-        MCAL/Dio.c
-        )
+Use this CMakeLists.txt at the root of your project:  
+Change the project name:  
+    project(MinimalUnityTests C)  
+In this case main function is in test_gpio_unity.c. Update exatuable files to:  
+    # Create executable "main" from source files  
+        add_executable(app_test_unity  
+        testing/unity/unity.c  
+        testing/test_gpio_unity.c  
+        BSW/GPIO/Gpio.c  
+        BSW/GPIO/Gpio_Cfg.c  
+        BSW/DET/ErrorHandler.c  
+        MCAL/Dio.c  
+        )  
 
-Please update also header directories to the include path:
-    target_include_directories(app_test_unity PRIVATE
-        APP BSW/GPIO BSW/DET MCAL RTE ProjectConfig
-        testing/unity testing
-    )
+Please update also header directories to the include path:  
+    target_include_directories(app_test_unity PRIVATE  
+        APP BSW/GPIO BSW/DET MCAL RTE ProjectConfig  
+        testing/unity testing  
+    )  
 
-Create build and run the tests in MINGW terminal:
-    cmake -S . -B build -G "Ninja" -DCMAKE_BUILD_TYPE=Debug
+Create build and run the tests in MINGW terminal:  
+    cmake -S . -B build -G "Ninja" -DCMAKE_BUILD_TYPE=Debug  
 
-Build the test executable:
-    cmake --build build
+Build the test executable:  
+    cmake --build build  
 
 Run the tests:
-    ./build/app_test_unity
+    ./build/app_test_unity  
 
-Check test result on terminal
-"test_gpio_set_valid_led:PASS
------------------------
-1 Tests 0 Failures 0 Ignored
-OK" 
+Check test result on terminal "test_gpio_set_valid_led:PASS  
+-----------------------  
+1 Tests 0 Failures 0 Ignored  
+OK"   
 
 ---
 
