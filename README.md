@@ -132,10 +132,14 @@ setUp() / tearDown() are hooks for preparing and cleaning test state.
 ---
 
 ## 7. Building and Running Tests with CMake
-Use this CMakeLists.txt at the root of your project:  
+Use CMakeLists.txt file at the root of your project:  
 Change the project name:  
-    project(MinimalUnityTests C)  
-In this case main function is in test_gpio_unity.c. Update exatuable files to:  
+
+    project(MinimalUnityTests C) 
+    
+In this case main function is in test_gpio_unity.c. 
+
+Update exatuable files to:  
     # Create executable "main" from source files  
         add_executable(app_test_unity  
         testing/unity/unity.c  
